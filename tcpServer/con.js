@@ -7,6 +7,16 @@ module.exports = function (params) {
     var self = this;
     this.isError = false;
 
+    switch (data.length) {
+        case 24:
+            parseHeartBeat();
+            break;
+
+    }
+
+    function parseHeartBeat() {
+
+    }
 
     this.error = function (err) {
         this.isError = err;
