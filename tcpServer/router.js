@@ -2,7 +2,7 @@
 module.exports = function () {
     var self = this;
     var util = require('util');
-    var Con = require('./con');
+    var Con = require('./connection');
 
     this.errorCallback = function () {
     }; // error handler
