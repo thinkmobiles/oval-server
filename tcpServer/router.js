@@ -22,11 +22,14 @@ module.exports = function () {
             return self.error(new Error('invalid pkg'), con);
         }
 
-        if (!routs[con.action]) {
+        console.log('_____ ROUTS _____');
+        console.log(routs[con.action]);
+
+        if (!routs[con.action] || routs[con.action].functions.length === 0) {
             return self.error(new Error('do not have handler fot action "' + con.action + '"'), con);
         }
 
-        var gid = new Gid(con, routs[con.action]); // add to processing in routs stack;
+        var gid = new Gid(con, routs[con.action].functions); // add to processing in routs stack;
 
         return this;
     };
@@ -43,14 +46,8 @@ module.exports = function () {
     };
 
     function checkAction(action) {
-        var isSet = false;
-        for (var i = 0; i < routs; i++) {
-            if (routs[1].name === action) {
-                isSet = true;
-            }
-        }
-        if (!isSet) {
-            routs.push({name: action, functions: []})
+        if (!routs[action]) {
+            routs[action] = {functions: []}
         }
     }
 

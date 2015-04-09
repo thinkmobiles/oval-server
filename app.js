@@ -75,7 +75,8 @@ require('./routers/index')(app, PostGre);
 port = parseInt(process.env.PORT) || 8823;
 server = http.createServer(app);
 
-var tcpSrver = new TcpServer({port: 13000});
+
+var tcpSrver = TcpServer({port: 13000});
 
 server.listen(port, function () {
     console.log('Express start on port ' + port);
