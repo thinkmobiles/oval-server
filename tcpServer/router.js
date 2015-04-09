@@ -10,6 +10,7 @@ module.exports = function () {
     var routs = [];
 
     this.exec = function (socket, data) { // get the connection and data porthion and start routing
+        console.log('== router exec ==');
         var con = new Con({
             con: con,
             data: data,
@@ -18,11 +19,11 @@ module.exports = function () {
         });
 
         if (con.action === null) {
-            return self.error('invalid pkg', con);
+            return self.error(new Error('invalid pkg'), con);
         }
 
         if (!routs[con.action]) {
-            return self.error('do not have handler fot action "' + con.action + '"', con);
+            return self.error(new Error('do not have handler fot action "' + con.action + '"'), con);
         }
 
         var gid = new Gid(con, routs[con.action]); // add to processing in routs stack;
@@ -76,11 +77,17 @@ module.exports = function () {
                 return router.error(err);
             }
             if (con.whosResponse) {
-                return router.error('already whose response');
+                return router.error(new Error('already whose response'));
             }
+
             index++;
+
+            if (!functions[index]) {
+                return router.error(new Error('pkg not handle'));
+            }
+
             functions[index](con, _this.next);
-        }
+        };
 
         functions[0](con, _this.next);
     }

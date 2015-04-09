@@ -48,10 +48,11 @@ module.exports = function (params) {
             console.log('TCP >>> get data:', data.toString(), '==>', data);
 
             self.get++;
-            switch (socket.length) {
+
+            switch (data.length) {
                 case 24:
                     router.exec(socket, data);
-
+                    break;
                 default:
                     self.drop++;
                     break;
@@ -71,29 +72,3 @@ module.exports = function (params) {
 
     startServer();
 };
-
-
-//var net = require('net');
-//var server = net.createServer(function (c) {
-//
-//    console.log('client connected');
-//
-//    c.write('hello\r\n');
-//
-//    c.on('end', function (d) {
-//        console.log('END disconnected', d);
-//    });
-//    c.on('error', function (d) {
-//        console.log('ERROR client disconnected', d);
-//    });
-//    c.on('close', function (d) {
-//        console.log('CLOSED client disconnected', d);
-//    });
-//    //c.pipe(c);
-//    c.on('data', function (data) {
-//        console.log('==>', data.toString(), '==>', data);
-//    });
-//});
-//server.listen(8124, function () {
-//    console.log('server bound');
-//});
